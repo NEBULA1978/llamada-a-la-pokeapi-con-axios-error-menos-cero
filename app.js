@@ -1,14 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
 
+// const jwt = require('jsonwebtoken');
 
-const usersController = require('./controllers/users');
-usersController.registerUser('bettatech', '1234');
-// userController.registerUser('mastermind', '4321');
+// Routes
+const authRoutes = require('./routers/auth').router;
+const teamsRoutes = require('./routers/teams').router;
 
-require('./auth')(passport);
+// require(',/auth')(passport);
+
 
 
 const app = express();
@@ -23,38 +23,25 @@ app.get('/', (req, res) => {
   // console.log(req);
   res.status(200).send('Hello World!')
 });
+// Nos permite facilmente crear modulosde nuestra aplicacion
+app.use('/auth', authRoutes);
+app.use('/teams', teamsRoutes);
 
-app.post('/login', (req, res) => {
-  if (!req.body) {
-    return res.status(400).send('Missing data');
-  } else if (!req.body.user || !req.body.password) {
-    return res.status(400).json({ mesasge: 'Missing data' });
-  }
-  usersController.checkUserCredentials(req.body.user, req.body.password, (err, result) => {
-    if (err || !result) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-    const token = jwt.sign({ userId: result }, 'secretPassword');
-    res.status(200).json({ token: token });
-  })
+// app.post('/team/pokemons', () => {
+//   res.status(200).send('Hello World!')
+// });
 
-});
+// app.get('/team', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+//   res.status(200).send('Hello World!')
+// })
 
-app.post('/team/pokemons', () => {
-  res.status(200).send('Hello World!')
-});
+// app.delete('/team/pokemons/:pokeid', (req, res) => {
+//   res.status(200).send('Hello World!')
+// });
 
-app.get('/team', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-  res.status(200).send('Hello World!')
-})
-
-app.delete('/team/pokemons/:pokeid', (req, res) => {
-  res.status(200).send('Hello World!')
-});
-
-app.put('/team', (req, res) => {
-  res.status(200).send('Hello World!')
-});
+// app.put('/team', (req, res) => {
+//   res.status(200).send('Hello World!')
+// });
 
 
 

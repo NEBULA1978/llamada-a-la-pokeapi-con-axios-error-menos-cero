@@ -13,7 +13,7 @@ describe("Suite de pruebas auth", () => {
     // Cuando la llamada no tiene correctamente la llave
     // Llamamos a la funcion para llamar a este endpoint
     chai.request(app)
-      .get("/team")
+      .get("/teams")
       .end((err, res) => {
         chai.assert.equal(res.statusCode, 401);
         done();
@@ -27,7 +27,7 @@ describe("Suite de pruebas auth", () => {
     // Cuando la llamada no tiene correctamente la llave
     // Llamamos a la funcion para llamar a este endpoint
     chai.request(app)
-      .post("/login")
+      .post("/auth/login")
       .end((err, res) => {
         chai.assert.equal(res.statusCode, 400);
         done();
@@ -40,7 +40,7 @@ describe("Suite de pruebas auth", () => {
     // Cuando la llamada no tiene correctamente la llave
     // Llamamos a la funcion para llamar a este endpoint
     chai.request(app)
-      .post("/login")
+      .post("/auth/login")
       .set('content-type', 'application/json')
       .send({ user: 'bettatech', password: '1234' })
       .end((err, res) => {
@@ -54,20 +54,20 @@ describe("Suite de pruebas auth", () => {
 
 
 
-  // Cuando la llamada no tiene correctamente la llave
+  // Cuando la llamada  tiene correctamente la llave
   it("should return 200 when jwt is valid", (done) => {
     // Cuando la llamada  tiene correctamente la llave
     // Llamamos a la funcion para llamar a este endpoint
     chai.request(app)
       // REspuesta del login que esperamos
-      .post("/login")
+      .post("/auth/login")
       .set('content-type', 'application/json')
       .send({ user: "bettatech", password: "1234" })
       .end((err, res) => {
         chai.assert.equal(res.statusCode, 200);
         // CUando recibimos respuesta realizamos el get
         chai.request(app)
-          .get("/team")
+          .get("/teams")
           .set("Authorization", `JWT ${res.body.token}`)
           .end((err, res) => {
             chai.assert.equal(res.statusCode, 200);

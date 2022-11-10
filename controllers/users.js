@@ -1,5 +1,6 @@
 const uuid = require('uuid');
 const crypto = require('../crypto.js');
+const teams = require('./teams');
 
 // Definimos base e datos usuarios,wardamos en un diccionario
 const userDatabase = {}
@@ -11,24 +12,29 @@ const registerUser = (userName, password) => {
 
   let hashedPwd = crypto.hashPasswordSync(password);
   // Guardamos en la base de datos nuestro ususario
-  userDatabase[uuid.v4()] = {
+  let userId = uuid.v4();
+  userDatabase[userId] = {
     userName: userName,
     password: hashedPwd
   }
+  // Un ususario que e acaba de registrar tenga un equipo vacio
+  teams.bootstrapTeam(userId);
+}
+
+const getUser = (userId) => {
+  return userDatabase[userId];
 }
 
 const getUserIdFromUserName = (userName) => {
   for (let user in userDatabase) {
     if (userDatabase[user].userName == userName) {
-      return userDatabase[user];
+      let userData = userDatabase[user];
+      userData.userId = user;
+      return userData;
     }
   }
 
 }
-
-
-
-
 
 // Recibe  un userid y un password y quenos devuelva verdadero o falso
 const checkUserCredentials = (userName, password, done) => {
@@ -45,3 +51,5 @@ const checkUserCredentials = (userName, password, done) => {
 
 exports.registerUser = registerUser;
 exports.checkUserCredentials = checkUserCredentials;
+exports.getUserIdFromUserName = getUserIdFromUserName;
+exports.getUser = getUser;

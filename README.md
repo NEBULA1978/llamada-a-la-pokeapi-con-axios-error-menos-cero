@@ -13,4 +13,4 @@ Acciones:
 -Consultar Equipo: GET /team
 -Eliminar Pokemon: DELETE /team/pokemons/:id
 Intercambiar el orden de nuestro pokemon: PUT /team
--Sistema de credencial
+-Sistema de credencial# NEBULA1978-llamada-a-la-pokeapi-con-axios-error-menos-cero

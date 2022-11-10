@@ -1,0 +1,23 @@
+Cuando cambio de bettateck a mastermind error en archivo tems-test.js:
+
+  6 passing (163ms)
+  1 failing
+
+  1) Suite de pruebas teams
+       should return the team of given user:
+
+      Uncaught AssertionError: expected 401 to equal 200
+      + expected - actual
+
+      -401
+      +200
+      
+      at /home/next/Imágenes/backend mastermind codigo videos separados/vamos a modificar equipos pokemon (copia)/test/teams.test.js:21:21
+      at Test.Request.callback (node_modules/superagent/lib/node/index.js:716:12)
+      at /home/next/Imágenes/backend mastermind codigo videos separados/vamos a modificar equipos pokemon (copia)/node_modules/superagent/lib/node/index.js:916:18
+      at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:19:7)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+
